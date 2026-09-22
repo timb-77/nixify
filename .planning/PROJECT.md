@@ -31,7 +31,7 @@ Not applicable — single-person personal project.
 - [ ] **NIX-09**: Support both NixOS and standalone Home Manager with sops-nix
 - [ ] **NIX-10**: Pass nix flake check building all host closures and Home Manager configs
 - [ ] **NIX-11**: Use nixfmt/alejandra with formatter wired to nix flake check
-- [ ] **NIX-12**: Use single nixpkgs input (25.05 stable) with Home Manager following same nixpkgs
+- [ ] **NIX-12**: Use single nixpkgs input (26.05 stable) with Home Manager following same nixpkgs
 - [ ] **NIX-13**: Support x86_64-linux with aarch64-linux possible without redesign
 - [ ] **NIX-14**: Implement working Vim debugging (vimspector) for both C++ and Python
 - [ ] **NIX-15**: Manage bash as base shell
@@ -54,7 +54,7 @@ Current environment: Pop!_OS 22.04, x86_64-linux, Nix 2.29 with flakes enabled, 
 ## Constraints
 
 - **Nix flakes only** — pure evaluation, no channels, no nix-env, no imperative state
-- **Single nixpkgs input** — pinned to nixos-25.05 stable
+- **Single nixpkgs input** — pinned to nixos-26.05 stable (25.05 EOL 2025-12-31; superseded to avoid known-vulnerable packages)
 - **Home Manager integration** — as NixOS module on NixOS, standalone elsewhere, sharing modules/home
 - **Secrets security** — plaintext never in repo or world-readable store; one age key per host
 - **Vim constraints** — Vim proper (not Neovim), two flavors side-by-side without sharing plugin state, plugins pinned in Nix, no runtime fetching
@@ -63,7 +63,7 @@ Current environment: Pop!_OS 22.04, x86_64-linux, Nix 2.29 with flakes enabled, 
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| nixpkgs pinned to 25.05 stable | Stability over latest features for long-term maintenance | — Pending |
+| nixpkgs pinned to 26.05 stable | 25.05 EOL 2025-12-31 (no security updates); 26.05 is the only supported stable | — Pending |
 | Use vimspector for Vim debugging | Unified debugging UI for both C++ and Python | — Pending |
 | Manage bash as base shell | Universal, works everywhere by default | — Pending |
 | Critical GUI apps in Nix on non-NixOS | Balance reproducibility with practicality | — Pending |
