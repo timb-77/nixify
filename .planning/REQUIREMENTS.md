@@ -66,30 +66,30 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NIX-01 | _ | Pending |
-| NIX-02 | _ | Pending |
-| NIX-03 | _ | Pending |
-| NIX-04 | _ | Pending |
-| NIX-05 | _ | Pending |
-| NIX-06 | _ | Pending |
-| NIX-07 | _ | Pending |
-| NIX-08 | _ | Pending |
-| NIX-09 | _ | Pending |
-| NIX-10 | _ | Pending |
-| NIX-11 | _ | Pending |
-| NIX-12 | _ | Pending |
-| NIX-13 | _ | Pending |
-| NIX-14 | _ | Pending |
-| NIX-15 | _ | Pending |
-| NIX-16 | _ | Pending |
-| NIX-17 | _ | Pending |
-| NIX-18 | _ | Pending |
+| NIX-01 | Phase 7 | Pending |
+| NIX-02 | Phase 7 | Pending |
+| NIX-03 | Phase 1 | Pending |
+| NIX-04 | Phase 1 | Pending |
+| NIX-05 | Phase 2 | Pending |
+| NIX-06 | Phase 3 | Pending |
+| NIX-07 | Phase 2 | Pending |
+| NIX-08 | Phase 5 | Pending |
+| NIX-09 | Phase 5 | Pending |
+| NIX-10 | Phase 1 | Pending |
+| NIX-11 | Phase 1 | Pending |
+| NIX-12 | Phase 1 | Pending |
+| NIX-13 | Phase 1 | Pending |
+| NIX-14 | Phase 4 | Pending |
+| NIX-15 | Phase 2 | Pending |
+| NIX-16 | Phase 7 | Pending |
+| NIX-17 | Phase 6 | Pending |
+| NIX-18 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 18 total
-- Mapped to phases: 0
-- Unmapped: 18 ⚠️
+- Mapped to phases: 18
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: Tue Sep 22 2026*
-*Last updated: Tue Sep 22 2026 after initial definition*
+*Last updated: Tue Sep 22 2026 after roadmap traceability mapping*
