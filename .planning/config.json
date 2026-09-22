@@ -50,7 +50,14 @@
     "security_block_on": "high"
   },
   "ship": {
-    "pr_body_sections": []
+    "pr_body_sections": [
+      {
+        "heading": "User Stories & Acceptance Criteria",
+        "enabled": true,
+        "source": "REQUIREMENTS.md ## User Stories || REQUIREMENTS.md ## Acceptance Criteria",
+        "fallback": "- Acceptance criteria are covered by the linked requirements and verification evidence."
+      }
+    ]
   },
   "hooks": {
     "context_warnings": true
