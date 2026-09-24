@@ -13,7 +13,7 @@ nixify begins as a minimal flake skeleton that wires the first Pop!_OS host thro
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Flake Skeleton & Host Registry** - Minimal dual-eval flake with registry, checks, formatter, and the 26.05 single-nixpkgs pin
+- [x] **Phase 1: Flake Skeleton & Host Registry** - Minimal dual-eval flake with registry, checks, formatter, and the 26.05 single-nixpkgs pin (completed 2026-09-24)
 - [ ] **Phase 2: Base User Environment** - git, tmux, bash, and plain vim applied end-to-end on standalone Pop!_OS
 - [ ] **Phase 3: Vim Flavors** - vim-cpp and vim-py side-by-side with plain vim, shared core, all plugins pinned in Nix
 - [ ] **Phase 4: vimspector Debugging** - C++ and Python debugging with store-resolved adapters, zero runtime downloads
@@ -41,11 +41,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Walking Skeleton: registry-driven flake, composer, two-gate checks, nixfmt-tree formatter, criteria battery
+- [x] 01-01-PLAN.md — Walking Skeleton: registry-driven flake, composer, two-gate checks, nixfmt-tree formatter, criteria battery
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02-PLAN.md — Decision checkpoint: optional live home-manager switch (research assumption A2)
+- [x] 01-02-PLAN.md — Decision checkpoint: optional live home-manager switch (research assumption A2)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -147,7 +147,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Flake Skeleton & Host Registry | 0/3 | Not started | - |
+| 1. Flake Skeleton & Host Registry | 2/2 | Complete    | 2026-09-24 |
 | 2. Base User Environment | 0/0 | Not started | - |
 | 3. Vim Flavors | 0/0 | Not started | - |
 | 4. vimspector Debugging | 0/0 | Not started | - |
