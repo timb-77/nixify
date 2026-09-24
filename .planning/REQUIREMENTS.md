@@ -11,10 +11,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **NIX-01**: Support both NixOS hosts and non-NixOS hosts (standalone Home Manager) from the same flake
 - [ ] **NIX-02**: Provide identical user-level configuration across both host types
-- [ ] **NIX-03**: Implement layered configuration (Base → Roles → Host) with clear precedence
-- [ ] **NIX-04**: Enable adding new hosts by touching only hosts/<name>/ and one line in flake.nix
-- [ ] **NIX-12**: Use single nixpkgs input (26.05 stable) with Home Manager following same nixpkgs
-- [ ] **NIX-13**: Support x86_64-linux with aarch64-linux possible without redesign
+- [x] **NIX-03**: Implement layered configuration (Base → Roles → Host) with clear precedence
+- [x] **NIX-04**: Enable adding new hosts by touching only hosts/<name>/ and one line in flake.nix
+- [x] **NIX-12**: Use single nixpkgs input (26.05 stable) with Home Manager following same nixpkgs
+- [x] **NIX-13**: Support x86_64-linux with aarch64-linux possible without redesign
 
 ### Base Tooling
 
@@ -31,8 +31,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Verification & Bootstrap
 
-- [ ] **NIX-10**: Pass nix flake check building all host closures and Home Manager configs
-- [ ] **NIX-11**: Use nixfmt/alejandra with formatter wired to nix flake check
+- [x] **NIX-10**: Pass nix flake check building all host closures and Home Manager configs
+- [x] **NIX-11**: Use nixfmt/alejandra with formatter wired to nix flake check
 - [ ] **NIX-16**: Manage critical GUI apps in Nix where appropriate on non-NixOS hosts
 - [ ] **NIX-17**: Enable bootstrap from fresh machine in under 1 hour with <10 manual steps
 - [ ] **NIX-18**: Support first host (Pop!_OS 22.04 x86_64) as standalone Home Manager
@@ -68,17 +68,17 @@ Deferred to future release. Tracked but not in current roadmap.
 |-------------|-------|--------|
 | NIX-01 | Phase 7 | Pending |
 | NIX-02 | Phase 7 | Pending |
-| NIX-03 | Phase 1 | Pending |
-| NIX-04 | Phase 1 | Pending |
+| NIX-03 | Phase 1 | Complete |
+| NIX-04 | Phase 1 | Complete |
 | NIX-05 | Phase 2 | Pending |
 | NIX-06 | Phase 3 | Pending |
 | NIX-07 | Phase 2 | Pending |
 | NIX-08 | Phase 5 | Pending |
 | NIX-09 | Phase 5 | Pending |
-| NIX-10 | Phase 1 | Pending |
-| NIX-11 | Phase 1 | Pending |
-| NIX-12 | Phase 1 | Pending |
-| NIX-13 | Phase 1 | Pending |
+| NIX-10 | Phase 1 | Complete |
+| NIX-11 | Phase 1 | Complete |
+| NIX-12 | Phase 1 | Complete |
+| NIX-13 | Phase 1 | Complete |
 | NIX-14 | Phase 4 | Pending |
 | NIX-15 | Phase 2 | Pending |
 | NIX-16 | Phase 7 | Pending |
@@ -86,6 +86,7 @@ Deferred to future release. Tracked but not in current roadmap.
 | NIX-18 | Phase 6 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 18 total
 - Mapped to phases: 18
 - Unmapped: 0 ✓
