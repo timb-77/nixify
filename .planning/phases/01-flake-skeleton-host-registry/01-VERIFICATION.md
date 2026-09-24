@@ -1,6 +1,6 @@
 ---
 phase: 01-flake-skeleton-host-registry
-verified: 2026-09-24T16:37:22Z
+verified: 2026-09-24T16:42:58Z
 status: passed
 score: 7/7 must-haves verified
 covered_files:
@@ -17,17 +17,23 @@ covered_files:
   - "hosts/razer-blade/home.nix"
   - "lib/composer.nix"
   - "modules/base/default.nix"
-covered_digest: "v1:sha256:be016527a1ab0f44cea067e60d4966850ecc4f82ec08d1885d5b9e3634afadd6"
+covered_digest: "v1:sha256:be684e22936da78467588d7670f576e78f3e81cb97e119c74993f49565d801d6"
 behavior_unverified: 0
 overrides_applied: 0
+re_verification:
+  previous_status: passed
+  previous_score: 7/7
+  gaps_closed: []
+  gaps_remaining: []
+  regressions: []
 ---
 
 # Phase 01: Flake Skeleton & Host Registry Verification Report
 
 **Phase Goal:** A minimal but complete flake skeleton hosts the first Pop!_OS configuration behind dual-eval builders, gated by checks and a formatter
-**Verified:** 2026-09-24T16:37:22Z
+**Verified:** 2026-09-24T16:42:58Z
 **Status:** passed
-**Re-verification:** No — initial verification
+**Re-verification:** Yes — #2349 plan-retirement re-run (01-03-PLAN.md now carries `status: superseded` frontmatter; report updated to incorporate the retirement, status unchanged at passed)
 
 **Methodology note (MVP mode):** ROADMAP.md marks Phase 1 `mode: mvp`, but the phase goal is a technical goal, not a User Story (`user-story.validate` → `false`). Per the developer's direct instruction, this verification was run as standard goal-backward verification against the ROADMAP Success Criteria. No User Flow Coverage table is emitted; the criteria themselves are the outcome contract and each was verified behaviorally.
 
@@ -47,11 +53,29 @@ All truths from 01-01-PLAN.md and 01-02-PLAN.md must_haves plus the 5 ROADMAP Su
 | 6   | Module imports follow Base → Roles → Host ordering (composer moduleList)                                        | ✓ VERIFIED | `lib/composer.nix:21-25`: `moduleList = [ ../modules/base ] ++ map (role: ../modules/roles/${role}) cfg.roles ++ [ ../hosts/${name}/home.nix ]` — Host last. Behavioral merge check: `config.home.packages` contains `hello-2.12.3.drv` and `targets.genericLinux.enable` = true — Host-layer content provably flows through moduleList into the composed config. Conflict-level override semantics rest on documented Nix module system behavior (later modules win); no conflict exists in Phase 1 because `modules/base` is intentionally empty (D-06) — see Honest-Verifier Notes |
 | 7   | `nix eval .#checks.aarch64-linux.fmt.drvPath` succeeds (aarch64 parametrization evaluates)                      | ✓ VERIFIED | Exit 0 → `/nix/store/zzh0a2fbkyd5ll83pyg67f6473m9xr5b-fmt-check.drv`; `nix flake show` lists `checks.aarch64-linux.fmt` and `formatter.aarch64-linux` as outputs |
 | 8   | The user decides, with full context, whether razer-blade gets a live HM switch now or only in Phase 6 (01-02)   | ✓ VERIFIED | `01-02-SUMMARY.md` line 43 is exactly `option-b` (blocking-human checkpoint decision recorded verbatim) |
-| 9   | Plan 01-03's precondition (which option won) is recorded in the decision outcome (01-02)                        | ✓ VERIFIED | `^option-b$` line present → 01-03's precondition asserts `option-a` → plan halts. No `01-03-SUMMARY.md` exists — consistent with the by-design skip |
+| 9   | Plan 01-03's precondition (which option won) is recorded in the decision outcome (01-02)                        | ✓ VERIFIED | `^option-b$` line present → 01-03's precondition asserts `option-a` → plan halts. No `01-03-SUMMARY.md` exists — consistent with the by-design skip, now formalized as `status: superseded` retirement (see audit below) |
 
 **Score:** 7/7 applicable truths verified (rows 1–7 from 01-01 + SC battery, rows 8–9 from 01-02; 0 present-but-behavior-unverified)
 
-**01-03 (live switch) — skipped by design, not a gap.** The recorded `option-b` decision defers the optional live `home-manager switch` to Phase 6's bootstrap capstone. 01-03's three must-have truths (pinned-CLI switch succeeds, hello marker executable in live profile, pinned CLI used) are **N/A — precondition halt by explicit user decision**. The phase goal does not include the live apply: ROADMAP SC #1's pass criterion is `nix flake check` (D-08), and the activation package was built and its derivation executed by that check. Zero machine state was mutated in Phase 1, exactly as option-b intends.
+**01-03 (live switch) — retired per #2349, not a gap.** The recorded `option-b` decision defers the optional live `home-manager switch` to Phase 6's bootstrap capstone. 01-03's three must-have truths (pinned-CLI switch succeeds, hello marker executable in live profile, pinned CLI used) are **N/A — preconditional retirement by recorded user decision**. As of this re-run, 01-03-PLAN.md carries the machine-readable retirement marker per #2349:
+
+```yaml
+status: superseded
+superseded_reason: "Plan 01-02 recorded option-b (blocking-human decision): the optional live home-manager switch for razer-blade is deferred to Phase 6. 01-03's precondition (grep '^option-a$' in 01-02-SUMMARY.md) is deliberately unmet, so it was skipped by design."
+```
+
+**Retirement audit (#2349):**
+
+| Check | Evidence | Status |
+| ----- | -------- | ------ |
+| Marker present in frontmatter | `git diff` of 01-03-PLAN.md shows exactly two added lines: `status: superseded` + `superseded_reason` (no other content change) | ✓ |
+| Precondition genuinely unmet | `01-02-SUMMARY.md` line 43 is verbatim `option-b`; grep `^option-a$` matches nothing — the precondition barrier is real, not manufactured | ✓ |
+| Plan never executed | No `01-03-SUMMARY.md` exists in the phase directory | ✓ |
+| Reason text matches project state | `superseded_reason` cites the exact precondition (`grep '^option-a$'`), the recorded decision (option-b), and the deferral target (Phase 6) — all three independently verified | ✓ |
+| Retirement is semantically safe (gsd-core) | `plan-scan.cjs` (#2349 comment): a `status: superseded` plan "was deliberately reassigned or never executed — its work moved to a later plan, so it can never gain a matching `*-SUMMARY.md`" and is excluded from BOTH plan and summary counts; `phase.cjs` (#2648): retired plans are excluded from the fail-closed plan-coverage completion gate. 01-03 can never gain a SUMMARY and its work moved to Phase 6 — the marker is the correct, sanctioned handling, not a loop-hole bypass | ✓ |
+| Deferred work actually lands elsewhere | ROADMAP Phase 6 "Bootstrap & Fresh-Machine Validation" SC #3: "Bootstrap uses the repo-pinned Home Manager via `nix run home-manager/release-26.05 -- switch --flake .#pop`" — the identical pinned-CLI switch form 01-03 would have used | ✓ |
+
+The phase goal does not include the live apply: ROADMAP SC #1's pass criterion is `nix flake check` (D-08), and the activation package was built and its derivation executed by that check (truths #1–#7, re-confirmed: the authored code tree `flake.nix`/`flake.lock`/`lib/`/`hosts/`/`modules/` is git-clean and byte-identical to the tree behaviorally verified in the initial run). Zero machine state was mutated in Phase 1, exactly as option-b intends. The retirement upgrades the prior prose-only "skipped by design" note into the machine-readable form the plan-scan and completion gate consume — nothing about the phase's substantive 7/7 verification changes.
 
 ### Required Artifacts
 
@@ -75,7 +99,7 @@ All truths from 01-01-PLAN.md and 01-02-PLAN.md must_haves plus the 5 ROADMAP Su
 | `lib/composer.nix` | modules/base + hosts/<name>/home.nix | `moduleList` — Base → Roles → Host in one helper | ✓ WIRED | composer.nix:21-25; merge proven by config spot-checks |
 | `checks.<sys>.home-<name>` | `homeConfigurations.<name>` | `config.home.activationPackage` | ✓ WIRED | flake.nix:51; check built as `home-manager-generation.drv` |
 | `formatter` | `checks.<sys>.fmt` | same `nixfmt-tree` tool + `*.nix` matching | ✓ WIRED | flake.nix:41 (`nixfmt-tree`) and 58 (`nativeBuildInputs = [ pkgs.nixfmt-tree ]` + `treefmt --ci`) |
-| 01-02 decision outcome | 01-03 precondition | verbatim `option-b` line in 01-02-SUMMARY.md | ✓ WIRED | Option-b → 01-03's `option-a` precondition halts — the designed skip |
+| 01-02 decision outcome | 01-03 precondition | verbatim `option-b` line in 01-02-SUMMARY.md | ✓ WIRED | Option-b → 01-03's `option-a` precondition halts — the designed skip, now formalized as `status: superseded` retirement (#2349) |
 
 ### Data-Flow Trace (Level 4)
 
@@ -113,7 +137,7 @@ Note: the two mutation-bearing checks (negative control, host-add probe) were tr
 | ----------- | ----------- | ----------- | ------ | -------- |
 | NIX-03 | 01-01 | Layered configuration (Base → Roles → Host) with clear precedence | ✓ SATISFIED | `moduleList` ordering in composer.nix (single point, D-11); Host content merged into config (spot-checks) |
 | NIX-04 | 01-01 | Adding hosts by touching only hosts/<name>/ and one registry line | ✓ SATISFIED | Live probe: home-test-x86 evaluated, flake.nix byte-identical; flake.nix/composer contain zero host names |
-| NIX-10 | 01-01, 01-02, 01-03 | Pass nix flake check building all host closures and HM configs | ✓ SATISFIED | `nix flake check` exit 0 building `home-razer-blade` activation + fmt gate; live-apply aspect deferred to Phase 6 per recorded user decision (option-b) |
+| NIX-10 | 01-01, 01-02 (01-03 retired per #2349) | Pass nix flake check building all host closures and HM configs | ✓ SATISFIED | `nix flake check` exit 0 building `home-razer-blade` activation + fmt gate; live-apply aspect deferred to Phase 6 per recorded user decision (option-b, 01-02-SUMMARY §D-A2) — Phase 6 SC #3 is the deferral target. 01-03's NIX-10 claim retires with the plan; the requirement is not orphaned (01-01 + 01-02 carry it) |
 | NIX-11 | 01-01 | Formatter wired to nix flake check | ✓ SATISFIED | `formatter` = nixfmt-tree per system; fmt gate shares the tool and `.nix` matching; negative control fired |
 | NIX-12 | 01-01 | Single nixpkgs input (26.05 stable) with HM following | ✓ SATISFIED | flake.lock: 1 nixpkgs node (`nixos-26.05`), home-manager + sops-nix both follow |
 | NIX-13 | 01-01 | x86_64-linux with aarch64-linux possible without redesign | ✓ SATISFIED | `systems = [x86_64-linux aarch64-linux]`; aarch64 fmt check + formatter evaluate (`drvPath` eval OK) |
@@ -144,6 +168,7 @@ No gaps. All five ROADMAP Success Criteria hold on the committed tree, verified 
 
 ### Honest-Verifier Notes (informational, non-blocking)
 
+- **Re-verification scope (this run):** the sole delta since the initial 7/7 verification is the #2349 retirement marker on 01-03-PLAN.md. The authored code tree — `flake.nix`, `flake.lock`, `lib/composer.nix`, `hosts/*`, `modules/base/default.nix` — is git-clean with no commits or working-tree changes since the 01-01 commits (`68c656e`, `c1dec95`), so all behavioral spot-check evidence from the initial run transfers unchanged; no `nix` commands were re-run because no code changed. This run re-verified the retirement marker, its precondition evidence, gsd-core's superseded semantics, requirement traceability, and the Phase 6 deferral target.
 - **Precedence semantics (truth #6):** the merged-config spot checks behaviorally prove moduleList composition (Host content lands in the config). The conflict-level "host overrides base" semantics rest on the documented Nix module system guarantee (later modules win); Phase 1's base is intentionally empty (D-06), so no conflicting-definition case exists to exercise yet. The mechanism that will govern future precedence is correct by construction and pinned to a single helper — the natural place for a Phase 2+ assertion if desired.
 - **NIX-04 wording debt (docs, pre-flagged):** REQUIREMENTS.md still reads NIX-04 as "one line in flake.nix", while the designed-and-verified architecture adds hosts via one line in `hosts/default.nix` with flake.nix untouched — which is what ROADMAP SC #4 (the phase contract) requires. 01-01-SUMMARY already flags this for a later docs pass. Not a gap for this phase.
 - **Orchestrator-owned working-tree edits:** `.planning/STATE.md`, `.planning/config.json` (modified) and `.gsd/`, `.opencode/`, `.planning/milestone.lock`, `.planning/state.json` (untracked) predate this verification, are outside the phase's authored set, and are excluded from fmt/diff assertions exactly as documented in 01-01-SUMMARY process adaptations.
@@ -151,5 +176,5 @@ No gaps. All five ROADMAP Success Criteria hold on the committed tree, verified 
 
 ---
 
-_Verified: 2026-09-24T16:37:22Z_
+_Verified: 2026-09-24T16:42:58Z_
 _Verifier: the agent (gsd-verifier)_
