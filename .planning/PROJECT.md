@@ -16,23 +16,22 @@ Not applicable — single-person personal project.
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ **NIX-03**: Implement layered configuration (Base → Roles → Host) with clear precedence — Phase 1
+- ✓ **NIX-04**: Enable adding new hosts by touching only hosts/<name>/ and one line in flake.nix — Phase 1
+- ✓ **NIX-10**: Pass nix flake check building all host closures and Home Manager configs — Phase 1
+- ✓ **NIX-11**: Use nixfmt/alejandra with formatter wired to nix flake check — Phase 1
+- ✓ **NIX-12**: Use single nixpkgs input (26.05 stable) with Home Manager following same nixpkgs — Phase 1
+- ✓ **NIX-13**: Support x86_64-linux with aarch64-linux possible without redesign — Phase 1
 
 ### Active
 
 - [ ] **NIX-01**: Support both NixOS hosts and non-NixOS hosts (standalone Home Manager) from the same flake
 - [ ] **NIX-02**: Provide identical user-level configuration across both host types
-- [ ] **NIX-03**: Implement layered configuration (Base → Roles → Host) with clear precedence
-- [ ] **NIX-04**: Enable adding new hosts by touching only hosts/<name>/ and one line in flake.nix
 - [ ] **NIX-05**: Include base tools on all machines (git, tmux, vim, vim-cpp, vim-py)
 - [ ] **NIX-06**: Provide vim-cpp and vim-py as side-by-side flavors with shared core, no runtime plugin fetching
 - [ ] **NIX-07**: Keep plain vim available with common core only
 - [ ] **NIX-08**: Manage secrets with sops-nix, encrypted in repo, decrypted only on target machine
 - [ ] **NIX-09**: Support both NixOS and standalone Home Manager with sops-nix
-- [ ] **NIX-10**: Pass nix flake check building all host closures and Home Manager configs
-- [ ] **NIX-11**: Use nixfmt/alejandra with formatter wired to nix flake check
-- [ ] **NIX-12**: Use single nixpkgs input (26.05 stable) with Home Manager following same nixpkgs
-- [ ] **NIX-13**: Support x86_64-linux with aarch64-linux possible without redesign
 - [ ] **NIX-14**: Implement working Vim debugging (vimspector) for both C++ and Python
 - [ ] **NIX-15**: Manage bash as base shell
 - [ ] **NIX-16**: Manage critical GUI apps in Nix where appropriate on non-NixOS hosts
@@ -63,10 +62,14 @@ Current environment: Pop!_OS 22.04, x86_64-linux, Nix 2.29 with flakes enabled, 
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| nixpkgs pinned to 26.05 stable | 25.05 EOL 2025-12-31 (no security updates); 26.05 is the only supported stable | — Pending |
+| nixpkgs pinned to 26.05 stable | 25.05 EOL 2025-12-31 (no security updates); 26.05 is the only supported stable | ✓ Ships — single nixpkgs node with HM + sops-nix following (Phase 1) |
 | Use vimspector for Vim debugging | Unified debugging UI for both C++ and Python | — Pending |
 | Manage bash as base shell | Universal, works everywhere by default | — Pending |
 | Critical GUI apps in Nix on non-NixOS | Balance reproducibility with practicality | — Pending |
+| Host registry lives in hosts/default.nix | Name-keyed attrset of full entries {system, kind, username, roles} — not a list, not partial configs (D-01) | ✓ Ships — registry → composer dasives homeConfigurations/checks/formatter (Phase 1) |
+| Machine identity is razer-blade | DMI product name (not pop-os); kind = "standalone" (non-NixOS + standalone HM) (D-02/03) | ✓ Ships — razer-blade host entry active (Phase 1) |
+| Exactly two checks per system | home-<name> via config.home.activationPackage + fmt via treefmt --ci (D-08); flake check is roadmap criterion #1 | ✓ Ships — `nix flake check` exit 0 on both systems (Phase 1) |
+| Live home-manager switch deferred to Phase 6 | Blocking-human A2 decision: repo-only phase end; real apply at Phase 6 fresh-machine bootstrap (option-b) | ✓ Recorded — 01-02 verbatim decision; 01-03 retired (Phase 1) |
 
 ## Evolution
 
@@ -86,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: Tue Sep 22 2026 after initialization*
+*Last updated: Thu Sep 24 2026 after Phase 1*

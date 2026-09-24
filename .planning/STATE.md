@@ -20,10 +20,10 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated Tue Sep 22 2026)
+See: .planning/PROJECT.md (updated Thu Sep 24 2026)
 
 **Core value:** A single declarative source of truth makes every Linux machine reproducible, version-controlled, and provisionable from a fresh install in under an hour.
-**Current focus:** Phase 01 — Flake Skeleton & Host Registry
+**Current focus:** Phase 02 — Base User Environment
 
 ## Current Position
 
@@ -74,8 +74,6 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 1: verify HM `config.system.build.activationPackage` exists on release-26.05 (the standalone checks design depends on it)
-- Phase 1: lock the single nixpkgs via `follows` on HM + sops-nix — verify in `nix flake check`
 - Phase 3 research flag: vim flavor state isolation + `~/.vimrc` migration are empirical unknowns — plan-phase research required
 - Phase 4 research flag: vimspector store-adapter path wiring is MEDIUM confidence — plan-phase research required
 - Phase 5: verify sops-nix parent-dir auto-creation and `sops.validateSopsFiles` behavior at execution
@@ -90,6 +88,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-23T11:17:42.205Z
+Last session: 2026-09-24T16:47:00Z
 Stopped at: Phase 01 complete, ready to plan Phase 2
-Resume file: .planning/phases/01-flake-skeleton-host-registry/01-CONTEXT.md
+Resume file: None
