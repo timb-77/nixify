@@ -33,7 +33,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `flake.lock` contains exactly one nixpkgs node (26.05 stable) with Home Manager and sops-nix following it
   4. Adding a test host requires only a `hosts/<name>/` directory plus one registry line — flake.nix stays untouched
   5. Module imports follow Base → Roles → Host precedence (host overrides base), and systems are parametrized so aarch64-linux evaluates without redesign
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 01-01-PLAN.md — Walking Skeleton: registry-driven flake, composer, two-gate checks, nixfmt-tree formatter, criteria battery
+- [ ] 01-02-PLAN.md — Decision checkpoint: optional live home-manager switch (research assumption A2)
+- [ ] 01-03-PLAN.md — User-approved live `home-manager switch --flake .#razer-blade` + marker verification
 
 ### Phase 2: Base User Environment
 **Goal**: Real user modules — git, tmux, bash, plain vim — apply end-to-end on the standalone Pop!_OS host
@@ -113,7 +117,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Flake Skeleton & Host Registry | 0/0 | Not started | - |
+| 1. Flake Skeleton & Host Registry | 0/3 | Not started | - |
 | 2. Base User Environment | 0/0 | Not started | - |
 | 3. Vim Flavors | 0/0 | Not started | - |
 | 4. vimspector Debugging | 0/0 | Not started | - |
