@@ -375,7 +375,7 @@ Verified patterns from official sources and this session's live probes:
 { inputs, ... }: {
   system = "x86_64-linux";   # OS default hostname is pop-os; machine identity is razer-blade (D-02)
   kind = "standalone";       # non-NixOS + standalone Home Manager (D-03)
-  username = "tim";          # same Unix username on every machine (GSD-BRIEF)
+  username = "timbernwald";  # same Unix username on every machine (verified: `id -un` = timbernwald)
   roles = [ ];               # D-12: composer built now, no roles until Phase 2
 }
 ```
@@ -443,11 +443,11 @@ The negative control (unformatted `broken.nix` committed) made `nix flake check`
 | A9 | `extraSpecialArgs = { inherit inputs; }` is passed even though Phase 1 modules don't consume it (matches official template; harmless, future-proofs Phase 2). | Pattern 1 | None — verified-legal argument of `homeManagerConfiguration`. |
 | A10 | nixpkgs rev `c508844` (2026-09-24) is a valid, current 26.05 revision | Standard Stack | Locked by a real fetch this session; the lock file is the source of truth regardless. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Live-switch acceptance in Phase 1?** — What we know: the check builds the real activation package (verified); a live `home-manager switch --flake .#razer-blade` on this machine would install genericLinux env + hello (non-destructive, but changes live HM profile state and generations). What's unclear: whether the user wants the phase to end with an actual applied state or only a building one (bootstrap capstone is Phase 6). Recommendation: make the live switch an optional, explicitly-flagged acceptance step gated on user confirmation (A2).
-2. **Exact fmt-gate derivation shape** — What we know: both `treefmt --ci`-on-copy and `nixfmt --check`-file-list variants verified; treefmt variant mirrors the formatter exactly. What's unclear: planner's preference for diagnostics (nixfmt gives per-file messages). Recommendation: treefmt variant (Pattern 2); note the simpler `nixfmt --check` alternative in the plan.
-3. **`kind` future-proofing** — What we know: registry carries `kind` now (`"standalone"`); NixOS hosts arrive Phase 7. What's unclear: nothing blocking — the composer's `filterAttrs (n: cfg: cfg.kind == "standalone")` is the seam. Recommendation: keep the filter so checks/homeConfigurations never build NixOS entries prematurely.
+1. **Live-switch acceptance in Phase 1?** — What we know: the check builds the real activation package (verified); a live `home-manager switch --flake .#razer-blade` on this machine would install genericLinux env + hello (non-destructive, but changes live HM profile state and generations). What's unclear: whether the user wants the phase to end with an actual applied state or only a building one (bootstrap capstone is Phase 6). Recommendation: make the live switch an optional, explicitly-flagged acceptance step gated on user confirmation (A2). **RESOLVED (01-02-PLAN):** the live switch is a user-gated `checkpoint:decision` (wave 2, `autonomous: false`) offering option-a (run now) vs option-b (defer to Phase 6); option-b is the execution-plan default if the user does not opt in (Open Question 1 / A2 carried in the 01-02 plan frontmatter).
+2. **Exact fmt-gate derivation shape** — What we know: both `treefmt --ci`-on-copy and `nixfmt --check`-file-list variants verified; treefmt variant mirrors the formatter exactly. What's unclear: planner's preference for diagnostics (nixfmt gives per-file messages). Recommendation: treefmt variant (Pattern 2); note the simpler `nixfmt --check` alternative in the plan. **RESOLVED (01-01-PLAN, task 2):** the gate is `formatter` + `checks.x86_64-linux.fmt` both wired to `pkgs.nixfmt-tree` (2.6.0), run on a `$TMPDIR` copy of the flake source (no in-store mutation); the negative control (`bad.nix` → exit 1 with "unexpected changes detected") was verified this session.
+3. **`kind` future-proofing** — What we know: registry carries `kind` now (`"standalone"`); NixOS hosts arrive Phase 7. What's unclear: nothing blocking — the composer's `filterAttrs (n: cfg: cfg.kind == "standalone")` is the seam. Recommendation: keep the filter so checks/homeConfigurations never build NixOS entries prematurely. **RESOLVED (01-01-PLAN):** the composer's `standaloneHosts` applies the `cfg.kind == "standalone"` filter unconditionally, keeping Phase 7 NixOS entries out of `homeConfigurations`/`checks` until they are explicitly supported.
 
 ## Environment Availability
 
