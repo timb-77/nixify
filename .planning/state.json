@@ -1,0 +1,48 @@
+{
+  "contract": "1.0.0",
+  "flavor": "core",
+  "milestone": null,
+  "phases": [
+    {
+      "number": "1",
+      "name": "Flake Skeleton & Host Registry",
+      "status": "complete"
+    },
+    {
+      "number": "2",
+      "name": "Base User Environment",
+      "status": "pending"
+    },
+    {
+      "number": "3",
+      "name": "Vim Flavors",
+      "status": "pending"
+    },
+    {
+      "number": "4",
+      "name": "vimspector Debugging",
+      "status": "pending"
+    },
+    {
+      "number": "5",
+      "name": "Secrets (sops-nix)",
+      "status": "pending"
+    },
+    {
+      "number": "6",
+      "name": "Bootstrap & Fresh-Machine Validation",
+      "status": "pending"
+    },
+    {
+      "number": "7",
+      "name": "Second-Host & GUI Validation",
+      "status": "pending"
+    }
+  ],
+  "next": {
+    "command": "/gsd:progress --next",
+    "label": "Advance to the next step (plan phase 2)",
+    "reason": "Phase 2 of 7 — needs a plan"
+  },
+  "updated_at": "2026-09-24T16:45:55.132Z"
+}
