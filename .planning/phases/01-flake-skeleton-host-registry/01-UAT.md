@@ -55,18 +55,18 @@ coverage_id: D6
 
 ### 7. Automated coverage confirmation (D1-D6)
 expected: All six auto-verified deliverables from 01-01 behave as stated (D1 single-nixpkgs lock topology, D2 nix flake check builds activation + fmt gates, D3 formatter wired to check surface, D4 Base→Roles→Host layering, D5 host-add without flake.nix edits, D6 aarch64 end-to-end evaluation)
-result: pending
+result: pass
 
 ### 8. Decision outcome recorded (A2 → option-b)
 expected: 01-02-SUMMARY.md contains the verbatim line `option-b`; the live home-manager switch for razer-blade is deferred to Phase 6 (01-03 retired as superseded); no machine state was mutated in Phase 1
-result: pending
+result: pass
 
 ## Summary
 
 total: 8
-passed: 6
+passed: 8
 issues: 0
-pending: 2
+pending: 0
 skipped: 0
 blocked: 0
 
