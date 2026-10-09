@@ -380,14 +380,16 @@ in
 | A8 | No plugin in Phase 2 means zero runtime fetching (satisfies C5) | Pitfalls / Security | Low | [VERIFIED: `plugins` forced `[]`; HM only warns for plugins when `sensibleOnTop`/defaults used] |
 | A9 | bash's default `package = bashInteractive` is acceptable (no explicit package override needed) | bash.nix | Low | [VERIFIED: bash.nix option default] |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-| # | Question | Why It Matters | Recommendation |
-|---|----------|----------------|----------------|
-| Q1 | Should real git `user.name`/`user.email` be set now, or placeholders until a later host-override phase? | Commit attribution + who owns identity (base vs host) | Keep placeholder in base (D-03 says identity "can be overridden per-host later"); optionally let the host set real values. Decide at discuss/plan. |
-| Q2 | Where should the shared vim core live — `lib/vim-core.nix` (not a module) vs `modules/base/vim-core.nix`? | Avoids accidentally registering a non-module in the Base import list | Recommend `lib/vim-core.nix` (plain data) imported by `vim.nix`. |
-| Q3 | Should plain vim use `extraConfig` only (all core in the string) or split supported keys into `programs.vim.settings`? | Affects Phase-3 reuse fidelity | Recommend all-in-`coreRC` so the exact string is reused as `customRC` in Phase 3. |
-| Q4 | History limit / tmux extra binds within D-05's "sensible" | Cosmetic/personalization | Pick conservative values in the plan; not blocking. |
+All four questions below are resolved; the resolutions are implemented by `02-01-PLAN.md`.
+
+| # | Question | Why It Matters | Recommendation | Resolution |
+|---|----------|----------------|----------------|------------|
+| Q1 | Should real git `user.name`/`user.email` be set now, or placeholders until a later host-override phase? | Commit attribution + who owns identity (base vs host) | Keep placeholder in base (D-03 says identity "can be overridden per-host later"); optionally let the host set real values. Decide at discuss/plan. | **RESOLVED:** keep placeholder identity (`"User"` / `"user@example.com"`) in the base module per D-03; real values are overridable per host later (implemented in 02-01-PLAN Task 1). |
+| Q2 | Where should the shared vim core live — `lib/vim-core.nix` (not a module) vs `modules/base/vim-core.nix`? | Avoids accidentally registering a non-module in the Base import list | Recommend `lib/vim-core.nix` (plain data) imported by `vim.nix`. | **RESOLVED:** shared core lives in `lib/vim-core.nix` as plain data (not a module), imported by `modules/base/vim.nix` (implemented in 02-01-PLAN Task 3). |
+| Q3 | Should plain vim use `extraConfig` only (all core in the string) or split supported keys into `programs.vim.settings`? | Affects Phase-3 reuse fidelity | Recommend all-in-`coreRC` so the exact string is reused as `customRC` in Phase 3. | **RESOLVED:** all core settings live in the `extraConfig`/`coreRC` string so the exact string is reused as `customRC` in Phase 3 (implemented in 02-01-PLAN Task 3). |
+| Q4 | History limit / tmux extra binds within D-05's "sensible" | Cosmetic/personalization | Pick conservative values in the plan; not blocking. | **RESOLVED:** conservative `historyLimit = 10000` and default `Ctrl-b` prefix binds, no extra keybindings (implemented in 02-01-PLAN Task 2). |
 
 ## Environment Availability
 
