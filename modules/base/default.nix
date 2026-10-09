@@ -4,5 +4,6 @@
     ./git.nix
     ./tmux.nix
     ./bash.nix
+    ./vim.nix
   ];
 }
