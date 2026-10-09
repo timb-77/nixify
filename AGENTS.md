@@ -206,3 +206,9 @@ Do not make direct repo edits outside a GSD workflow unless the user explicitly 
 > Profile not yet configured. Run `/gsd-profile-user` to generate your developer profile.
 > This section is managed by `generate-claude-profile` -- do not edit manually.
 <!-- GSD:profile-end -->
+
+## Superpowers TDD Hook Override
+- Because this is purely declarative infrastructure config, standard TDD frameworks do not apply.
+- The `superpowers:tdd` "RED/GREEN" loop is instead defined as:
+  1. RED: Verify that your new flake module configuration breaks evaluation or fails `nix flake check` intentionally if mocking an incomplete state.
+  2. GREEN: Make changes until `nix flake check` passes successfully with an exit code of 0.
