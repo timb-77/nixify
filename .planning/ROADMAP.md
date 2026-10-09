@@ -64,7 +64,11 @@ Plans:
   3. bash is the managed base shell; opening a new shell loads Home Manager session variables
   4. `nix flake check` still passes with the real modules in the tree
 
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — git, tmux, bash, and plain-vim base modules wired through the Base layer (tracer + 2 expansion tasks)
 
 ### Phase 3: Vim Flavors
 
@@ -148,7 +152,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Flake Skeleton & Host Registry | 2/2 | Complete    | 2026-09-24 |
-| 2. Base User Environment | 0/0 | Not started | - |
+| 2. Base User Environment | 0/1 | Planned | - |
 | 3. Vim Flavors | 0/0 | Not started | - |
 | 4. vimspector Debugging | 0/0 | Not started | - |
 | 5. Secrets (sops-nix) | 0/0 | Not started | - |
